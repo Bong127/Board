@@ -18,7 +18,6 @@ public class Boards {
     private Date createdAt;
     private Date updatedAt;
     private Files file;
-    // 파일
     private MultipartFile mainFile;
     private List<MultipartFile> files;
 

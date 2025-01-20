@@ -14,8 +14,8 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
-                .group("aloha") // 그룹명 설정
-                .pathsToMatch("/**") // 경로 설정
+                .group("aloha")
+                .pathsToMatch("/**")
                 .build();
     }
 

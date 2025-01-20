@@ -92,8 +92,6 @@ public class FileController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> destroy(@PathVariable("id") String id) {
         try {
-            log.info("파일 삭제가 시작되었습니다요");
-            log.info("파일 삭제가 시작되었습니다요" + id);
             boolean result = fileService.deleteById(id);
             if(result){
                 return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
@@ -105,15 +103,11 @@ public class FileController {
         }
     }
 
-    // [DELETE] /files
-    // {"idList" : ['id1','id2','id3']}
     @DeleteMapping("")
     public ResponseEntity<?> deleteFiles(
         @RequestParam(value = "noList", required = false) List<Long> noList,
         @RequestParam(value = "idList", required = false) List<String> idList
     ){
-        log.info("noList[] : " + noList);
-        log.info("idList[] : " + idList);
         boolean result = false;
         if(noList != null){
             result = fileService.deleteFiles(noList);
@@ -140,24 +134,19 @@ public class FileController {
         File imgFile;
         Resource resource = resourceLoader.getResource("classpath:static/img/no-image.png"); 
 
-        // 파일 경로가 null 또는 파일이 존재하지 않는 경우
         if(filePath == null || !(imgFile = new File(filePath)).exists() ){
-            // no-image.png 적용
             imgFile = resource.getFile();
             filePath = imgFile.getPath();
         }
 
-        // 확장자
         String ext = filePath.substring(filePath.lastIndexOf(".")+1);
         String mimeType = MimeTypeUtils.parseMimeType("image/" + ext).toString();
         MediaType mType = MediaType.valueOf(mimeType);
 
         if(mType == null){
-            // 이미지 타입이 아닌 경우
             response.setContentType(MediaType.IMAGE_PNG_VALUE);
             imgFile = resource.getFile();
         } else{
-            // 이미지 타입인 경우
             response.setContentType(mType.toString());
         }
         FileInputStream fis = new FileInputStream(imgFile);
