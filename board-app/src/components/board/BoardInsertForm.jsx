@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
-// import './css/BoardInsertForm.css'
 import styles from './css/BoardInsertForm.module.css'
 
 const BoardInsertForm = ({onInsert}) => {
 
-
-  // state 선언
   const [title, settitle] = useState('')
   const [writer, setwriter] = useState('')
   const [content, setContent] = useState('')
@@ -16,24 +13,21 @@ const BoardInsertForm = ({onInsert}) => {
   const changeTitle = (e) => { settitle(e.target.value)}
   const changeWriter = (e) => { setwriter(e.target.value)}
   const changeContent = (e) => { setContent(e.target.value)}
-  // 메인 파일 변경 이벤트 핸들러 추가
+
   const changeMainFile = (e) => {
     setMainFile(e.target.files[0])
   }
-  // 파일 변경 이벤트 핸들러 추가
+
   const changeFile = (e) => {
     setFiles(e.target.files)
   }
   const onSumbit = () => {
-    // 파일 업로드
     const formData = new FormData()
 
-    // 게시글 정보 세팅
     formData.append('title',title)
     formData.append('writer',writer)
     formData.append('content',content)
 
-    // 파일 데이터 세팅
     if(mainFile){
         formData.append('mainFile', mainFile)
     }
@@ -44,13 +38,11 @@ const BoardInsertForm = ({onInsert}) => {
         }
     }
 
-    // 헤더
     const headers = {
         'Content-Type' : 'multipart/form-data'
     }
 
-    //onInsert(title,writer,content)    // appllication/json
-    onInsert(formData,headers)          // multipart/form-data
+    onInsert(formData,headers)
   }
 
   return (
@@ -60,11 +52,6 @@ const BoardInsertForm = ({onInsert}) => {
             <tr>
                 <th>제목</th>
                 <td>
-                    {/* 
-                        CSS modules의 클래스 선택자는 카멜 케이스로 쓰는것이 관례
-                        * 카멜케이스 : .formInput -> {styles.formInput} 
-                        * 케밥케이스 : .form-input -> {styles.form-input}
-                    */}
                     <input type="text" onChange={changeTitle} className={`${styles['form-input']}`}/>
                 </td>
             </tr>

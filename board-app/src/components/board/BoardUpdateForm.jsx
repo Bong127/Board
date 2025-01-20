@@ -9,11 +9,10 @@ const BoardUpdateForm = (
     {board,onUpdate,onDelete,fileList,onDownload,onFileDelete
         ,deleteCheckedFiles,mFile}) => {
 
-  // state 선언
   const [title, setTitle] = useState('')
   const [writer, setWriter] = useState('')
   const [content, setContent] = useState('')  
-  const [fileIdList, setFileIdList] = useState([]) // 선택 삭제 id 목록
+  const [fileIdList, setFileIdList] = useState([])
   const [mainFile, setMainFile] = useState(null)
   const [files, setFiles] = useState(null)
 
@@ -22,26 +21,22 @@ const BoardUpdateForm = (
   const changeContent = (e) => { setContent(e.target.value)}
   const {id} = useParams()
 
-  // 메인 파일 변경 이벤트 핸들러 추가
   const changeMainFile = (e) => {
     setMainFile(e.target.files[0])
   }
-  // 파일 변경 이벤트 핸들러 추가
+
   const changeFile = (e) => {
     setFiles(e.target.files)
   }
 
   const handleUpdate = () => {
-    // 파일 업로드
     const formData = new FormData()
 
-    // 게시글 정보 세팅
     formData.append('id',id)
     formData.append('title',title)
     formData.append('writer',writer)
     formData.append('content',content)
 
-    // 파일 데이터 세팅
     if(mainFile){
         formData.append('mainFile', mainFile)
     }
@@ -52,13 +47,11 @@ const BoardUpdateForm = (
         }
     }
 
-    // 헤더
     const headers = {
         'Content-Type' : 'multipart/form-data'
     }
 
-    //onInsert(title,writer,content)    // appllication/json
-    onUpdate(formData,headers)          // multipart/form-data
+    onUpdate(formData,headers)
   }
 
   const handleDelete = () => {
@@ -83,33 +76,26 @@ const BoardUpdateForm = (
     }
   }
 
-  // 체크박스 클릭 핸들러
   const checkFileId = (id) => {
     console.log(`체크한 아이디는 : ${id}`);
     
     let checked = false
 
-    // 체크 여부 확인
     for(let i = 0; i < fileIdList.length; i++){
         const fileId = fileIdList[i];
-        // 체크 : 체크박스 해제
         if(fileId == id ){
             fileIdList.splice(i, 1)
             checked = true
         }
     }
 
-    // 체크 X : 체크박스 지정
-    // 체크한 아이디 추가
     if(!checked){
-        // 체크한 아이디 추가
         fileIdList.push(id)
     }
     console.log(fileIdList);
     setFileIdList(fileIdList)
   }
 
-  // board 데이터가 변경될 때 상태 업데이트
   useEffect(() => {
       if (board) {
         setTitle(board.title);

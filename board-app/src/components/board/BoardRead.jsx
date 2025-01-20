@@ -18,16 +18,6 @@ const BoardRead = ({board,mainFile, fileList, onDownload}) => {
             <tr>
                 <th>제목</th>
                 <td>
-                    {/* 
-                        value vs defaultValue
-                        - Controllered Component (상태관리 컴포넌트)
-                        * 상태들이 변경되면 UI에 업데이트
-                        * value 값의 변경을 UI 업데이트 가능
-                        
-                        - Uncontrollered Component
-                        * 상태 변경 감지 안함
-                        * defaultValue 값은 초기에만 세팅
-                    */}
                     <input type="text" defaultValue={board.title ?? ''} className={`${styles['form-input']}`} readOnly/>
                 </td>
             </tr>

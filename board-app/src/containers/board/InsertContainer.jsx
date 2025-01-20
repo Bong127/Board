@@ -12,7 +12,6 @@ const InsertContainer = () => {
       const data = await response.data
       console.log(data);
       alert('등록 완료')
-      // 게시글 목록으로 이동
       navigate('/boards')
     }catch(error){
       console.log(error);
