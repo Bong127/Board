@@ -1,0 +1,31 @@
+/* 스타일 초기화 작업 */
+/* 
+    - 폰트
+    - 초기화 (reset)
+    - CSS 변수 선언
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@100..900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: inherit;}
+
+body{
+    font-family: "Noto Sans KR", serif;
+    font-size: var(--font-size-main);
+}
+
+ul { list-style-type: none;}
+
+a{text-decoration: none; color: black; font-weight: bold;}
+
+a:hover:not(.btn) {text-decoration: underline;}
+
+img{width: 100%;}
+
+button{cursor: pointer;}
+
+hr{margin-bottom: 10px;}
+
+:root{
+    --font-size-main:18px;
+}

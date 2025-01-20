@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.aloha.board.mapper.BoardMapper">
+
+  <resultMap type="Boards" id="boardMap">
+    <id property="no" column="no"/>
+    <result property="no" column="no"/>
+    <result property="id" column="id"/>
+    <result property="title" column="title"/>
+    <result property="writer" column="writer"/>
+    <result property="content" column="content"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedAt" column="updated_at"/>
+    <association property="file" column="no" javaType="Files" select="selectMainFile"></association>
+  </resultMap>
+
+  <select id="list" resultMap="boardMap">
+    select * from boards order by created_at desc
+  </select>
+
+  <select id="select" resultType="Boards">
+    select * from boards where no = #{no}
+  </select>
+
+  <select id="selectById" resultType="Boards">
+    select * from boards where id = #{id}
+  </select>
+
+  <insert id="insert" parameterType="Boards" useGeneratedKeys="true" keyProperty="no">
+    insert into boards(id, title, writer, content)
+    VALUES(#{id}, #{title}, #{writer}, #{content})
+  </insert>
+
+  <update id="update">
+      update boards
+      <set>
+        <if test="title != null">
+          title = #{title},
+        </if>
+        <if test="writer != null">
+          writer = #{writer},
+        </if>
+        <if test="content != null">
+          content = #{content},
+        </if>
+          updated_at = now()
+      </set>
+      where no = #{no}
+  </update>
+
+  <update id="updateById">
+      update boards
+      <set>
+        <if test="title != null">
+          title = #{title},
+        </if>
+        <if test="writer != null">
+          writer = #{writer},
+        </if>
+        <if test="content != null">
+          content = #{content},
+        </if>
+          updated_at = now()
+      </set>
+      where id = #{id}
+  </update>
+
+  <delete id="delete">
+    delete from boards
+    where no = #{no}
+  </delete>
+  
+  <delete id="deleteById">
+    delete from boards
+    where id = #{id}
+  </delete>
+
+  <select id="selectMainFile" resultType="Files">
+    select * from files
+    where p_no = #{no}
+          and p_table = 'boards'
+          and type = 'MAIN'
+  </select>
+
+</mapper>
